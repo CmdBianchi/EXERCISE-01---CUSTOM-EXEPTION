@@ -26,18 +26,15 @@ namespace EXERCISE_01___CUSTOM_EXEPTION {
                 Console.Write("Check-out date (dd/MM/yyyy): ");
                 checkOut = DateTime.Parse(Console.ReadLine());
 
-                DateTime now = DateTime.Now;
-                if(checkIn < now || checkOut < now) {
-                    Console.WriteLine("Error in reservation: must be future dates! ");
+                string error = reservation.UpdateDates(checkIn, checkOut);
+                if(error != null) {
+                    Console.WriteLine("Error in reservation: " +error);
                 }
-                else if(checkOut <= checkIn) {
-                    Console.WriteLine("Error ind reservation: must be future dates! ");
-                }
-                else { 
-                    reservation.UpdateDates(checkIn, checkOut)
+                else {
+                    reservation.UpdateDates(checkIn, checkOut);
+                    Console.WriteLine("Reservation: "+reservation);
                 }
             }
-
         }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////

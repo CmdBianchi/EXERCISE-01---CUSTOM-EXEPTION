@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace EXERCISE_01___CUSTOM_EXEPTION.Entities {
     //------------------------------- START -------------------------------//
     class Reservation {
-        public int RoomNumber { get; set; }
+        public int RoomNumber { get;  set; }
         public DateTime CheckIn { get; set; }
         public DateTime CheckOut { get; set; }
         //------------------------------- CONST -------------------------------//  
@@ -21,10 +21,19 @@ namespace EXERCISE_01___CUSTOM_EXEPTION.Entities {
             TimeSpan duration = CheckOut.Subtract(CheckIn);
             return (int)duration.TotalDays; //----------------------> CASTING TRANSFORMANDO EM INT
         }
-        public void UpdateDates(DateTime checkIn, DateTime checkOut)
-        {
+        public string UpdateDates(DateTime checkIn, DateTime checkOut) {
+            DateTime now = DateTime.Now;
+
+            if (checkIn < now || checkOut < now) {
+                return "Error in reservation: must be future dates! ";
+            }
+             if (checkOut <= checkIn) {
+                return "Error ind reservation: must be future dates! ";
+            }
+
             CheckIn = checkIn;
             CheckOut = checkOut;
+            return null;
         }
 
         public override string ToString() {
