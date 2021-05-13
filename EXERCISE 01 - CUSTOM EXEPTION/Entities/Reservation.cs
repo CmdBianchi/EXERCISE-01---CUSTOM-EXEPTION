@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EXERCISE_01___CUSTOM_EXEPTION.Entities;
 namespace EXERCISE_01___CUSTOM_EXEPTION.Entities {
     //------------------------------- START -------------------------------//
     class Reservation {
@@ -12,6 +13,9 @@ namespace EXERCISE_01___CUSTOM_EXEPTION.Entities {
         //------------------------------- CONST -------------------------------//  
         public Reservation(){}
         public Reservation(int roomNumber, DateTime checkIn, DateTime checkOut) {
+            if (checkOut <= checkIn) {
+                throw new ("Error in reservation: must be future dates! ");
+            }
             RoomNumber = roomNumber;
             CheckIn = checkIn;
             CheckOut = checkOut;
@@ -21,21 +25,19 @@ namespace EXERCISE_01___CUSTOM_EXEPTION.Entities {
             TimeSpan duration = CheckOut.Subtract(CheckIn);
             return (int)duration.TotalDays; //----------------------> CASTING TRANSFORMANDO EM INT
         }
-        public string UpdateDates(DateTime checkIn, DateTime checkOut) {
+        public void UpdateDates(DateTime checkIn, DateTime checkOut) {
             DateTime now = DateTime.Now;
 
             if (checkIn < now || checkOut < now) {
-                return "Error in reservation: must be future dates! ";
+                throw new ("Error in reservation: must be future dates! ");
             }
-             if (checkOut <= checkIn) {
-                return "Error ind reservation: must be future dates! ";
+            if (checkOut <= checkIn) {
+                throw new ("Error in reservation: must be future dates! ");
             }
 
             CheckIn = checkIn;
             CheckOut = checkOut;
-            return null;
         }
-
         public override string ToString() {
             return "Room " + RoomNumber + ", " + CheckIn.ToString("dd/MM/yyyy") + CheckOut.ToString("dd/MM/yyyy") + ", " + Duration() + " nights";
         }

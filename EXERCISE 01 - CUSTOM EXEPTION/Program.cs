@@ -1,21 +1,20 @@
 ﻿using System;
 using EXERCISE_01___CUSTOM_EXEPTION.Entities;
-namespace EXERCISE_01___CUSTOM_EXEPTION {
+
+namespace EXERCISE_01___CUSTOM_EXEPTION
+{
     //-----> START
     ////////////////////////////////////////////////////////////////////////////////////////////
     class Program {
         static void Main(string[] args) {
-            Console.Write("Room number: ");
-            int number = int.Parse(Console.ReadLine());
-            Console.Write("Check-in date (dd/MM/yyyy): ");
-            DateTime checkIn = DateTime.Parse(Console.ReadLine());
-            Console.Write("Check-out date (dd/MM/yyyy): ");
-            DateTime checkOut = DateTime.Parse(Console.ReadLine());
-            
-            if (checkOut <= checkIn) {
-                Console.WriteLine("Error in reservation: Check-out date must be after check-in");                
-            }
-            else {
+            try { 
+                Console.Write("Room number: ");
+                int number = int.Parse(Console.ReadLine());
+                Console.Write("Check-in date (dd/MM/yyyy): ");
+                DateTime checkIn = DateTime.Parse(Console.ReadLine());
+                Console.Write("Check-out date (dd/MM/yyyy): ");
+                DateTime checkOut = DateTime.Parse(Console.ReadLine());
+         
                 Reservation reservation = new Reservation(number, checkIn, checkOut);
                 Console.WriteLine("Reservation: " +reservation);
 
@@ -25,15 +24,9 @@ namespace EXERCISE_01___CUSTOM_EXEPTION {
                 checkIn = DateTime.Parse(Console.ReadLine());
                 Console.Write("Check-out date (dd/MM/yyyy): ");
                 checkOut = DateTime.Parse(Console.ReadLine());
-
-                string error = reservation.UpdateDates(checkIn, checkOut);
-                if(error != null) {
-                    Console.WriteLine("Error in reservation: " +error);
-                }
-                else {
-                    reservation.UpdateDates(checkIn, checkOut);
-                    Console.WriteLine("Reservation: "+reservation);
-                }
+            }
+            catch (DomainExeception e) { 
+                Console.WriteLine("Error in reservation: " + e.Message);
             }
         }
     }
